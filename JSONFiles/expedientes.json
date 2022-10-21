@@ -1,0 +1,58 @@
+[
+  {
+    "nombre_mascota": "Pipo",
+    "sexo_mascota": "M",
+    "nacimiento_mascota": "SAD",
+    "especie": "Panita",
+    "raza": "CriptoPana",
+    "nombre_completo_dueno": "gluten",
+    "telefono": "Javier Garcia",
+    "direccion": "3212",
+    "alergias": "calle cuba",
+    "historial": "Ninguno"
+  },
+  {
+    "nombre_mascota": "ASDSAD",
+    "sexo_mascota": "ASADASD",
+    "nacimiento_mascota": "SADASDA",
+    "especie": "SADASDSA",
+    "raza": "ASDASD",
+    "nombre_completo_dueno": "SADA",
+    "telefono": "ADASDA",
+    "direccion": "ASDADA",
+    "alergias": "ASDAD",
+    "historial": ""
+  },
+  {
+    "nombre_mascota": "Juanito",
+    "sexo_mascota": "sads",
+    "nacimiento_mascota": "asddas",
+    "especie": "dsdasd",
+    "raza": "sadasd",
+    "nombre_completo_dueno": "dsada",
+    "telefono": "Daniel Moreno",
+    "direccion": "asdas",
+    "alergias": "asdsad",
+    "historial": [
+      {}
+    ]
+  },
+  {
+    "nombre_mascota": "Lola",
+    "sexo_mascota": "sadasd",
+    "nacimiento_mascota": "asdasda",
+    "especie": "dasds",
+    "raza": "adadas",
+    "nombre_completo_dueno": "dsada",
+    "telefono": "Enrique Moreno",
+    "direccion": "sadasd",
+    "alergias": "sadsadasd",
+    "historial": [
+      {
+        "nombre_veterinario": "Daniel Moren",
+        "fecha_observacion": "adas",
+        "observaciones": "Se va a morir"
+      }
+    ]
+  }
+]

@@ -3,7 +3,6 @@ import json
 
 class CrearJson:
     _file_path = ""
-    _key_field = ""
 
     """Clase de creación de archivos .json"""
     def __init__(self):
@@ -12,23 +11,23 @@ class CrearJson:
     def load(self):
         try:
             with open(self._file_path, "r", encoding="utf-8", newline="") as file:
-                print('Estoy aqui')
                 data_list = json.load(file)
         except FileNotFoundError:
-            print('Hola')
             data_list = []
         except json.JSONDecodeError:
             print('Error en el archivo JSON')
             return -1
         return data_list
 
-    def find_element(self, value, key=None):
+    def find_element(self, value, key, list = None):
         """Find element in the file"""
-        data_list = self.load()
-        if key is None:
-            key = self._key_field
-        for item in data_list:
-            if item[key] == value:
+        if list == None:
+            data_list = self.load()
+            for item in data_list:
+                if item[key] == value:
+                    return item
+        else:
+            if list[key] == value:
                 return True
         return False
 
@@ -38,7 +37,6 @@ class CrearJson:
             with open(self._file_path, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
         except FileNotFoundError:
-            print(self._file_path)
             print('Error: fichero no encontrado')
             return -1
 
