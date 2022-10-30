@@ -19,15 +19,11 @@ class CrearJson:
             return -1
         return data_list
 
-    def find_element(self, value, key, list = None):
+    def find_element(self, value, key):
         """Find element in the file"""
-        if list == None:
-            data_list = self.load()
-            for item in data_list:
-                if item[key] == value:
-                    return item
-        else:
-            if list[key] == value:
+        data_list = self.load()
+        for item in data_list:
+            if item[key] == value:
                 return True
         return False
 

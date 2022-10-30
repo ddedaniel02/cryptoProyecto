@@ -28,7 +28,8 @@ class Vet:
     def crear_usuario(self):
         user_store = CrearJsonVet()
         user_store.add_item(self)
-
+    def __del__(self):
+        print('Cerrando sesión')
 
 
 

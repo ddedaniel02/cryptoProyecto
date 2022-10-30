@@ -2,12 +2,10 @@
 
 from Data.doctors import Vet
 from JSONstorage.crear_json_doctor import CrearJsonVet
-from Funcionalidades.funcionalidades import Funcionalidades
+from Funcionalidades.funcionalidades import FuncionalidadesGenerales
 
 from Funcionalidades.funciones_cripto import FuncionesCripto
 
-from base64 import urlsafe_b64encode
-from base64 import urlsafe_b64decode
 
 
 def inicio_aplicacion():
@@ -22,20 +20,15 @@ def inicio_de_sesion():
     correo_electronico = input('Introduce tu correo electrónico: ')
     codigo_acceso = input('Introduce tu contraseña: ')
 
-    hashing = FuncionesCripto()
-    codigo_hash = hashing.hashing(codigo_acceso)
+    funcion_cripto = FuncionesCripto()
+    funcion_cripto.verificar_contraseña(codigo_acceso, correo_electronico)
 
-    item = validar_usuario(correo_electronico, 'email')
-    if item and validar_usuario(codigo_hash, "codigo_acceso", item):
-        print('Acceso concedido')
-        user_vet = Vet(item['nombre_completo'], item["fecha_nacimiento"], item["telefono"], item["email"],
-                                 item["direccion"], item["especialidades"], item["direccion_clinica"], item["nombre_clinica"],
-                                 item["telefono_clinica"], item["email_clinica"], item["codigo_acceso"])
+    print('Acceso concedido')
 
-        funcionalidades = Funcionalidades()
-        funcionalidades.display_funcionalidades()
-    else:
-        print('No existe ese usuario')
+    funcionalidades = FuncionalidadesGenerales()
+    funcionalidades.interfaz_inicio()
+
+
 
 
 def registro_usuario():
@@ -51,17 +44,23 @@ def registro_usuario():
     email_clinica = input('Correo Electronico de la clinica: ')
     codigo_acceso = input("Codigo de acceso: ")
 
-    hashing = FuncionesCripto()
-    codigo_hash = hashing.hashing(codigo_acceso)
-
 
     if not validar_usuario(email, 'email'):
-        print('Se puede crear al usuario')
-        user_vet = Vet(nombre_completo, telefono, email, fecha_nacimiento, direccion,
-                       direccion_clinica, nombre_clinica, telefono_clinica, email_clinica, codigo_hash)
+        cripto_funciones = FuncionesCripto()
+        cripto_funciones.generar_salt(email)
+
+        key_value = cripto_funciones.hashing(codigo_acceso, email)
+        nombre_cifrado = cripto_funciones.cifrado(nombre_completo, key_value)
+        telefono_cifrado = cripto_funciones.cifrado(telefono, key_value)
+        direccion_cifrada = cripto_funciones.cifrado(direccion, key_value)
+
+        user_vet = Vet(nombre_cifrado, telefono_cifrado, email, fecha_nacimiento, direccion_cifrada,
+                       direccion_clinica, nombre_clinica, telefono_clinica, email_clinica, key_value)
         user_vet.crear_usuario()
-        funcionalidades =  Funcionalidades()
-        funcionalidades.display_funcionalidades()
+        print('Usuario creado')
+
+        funcionalidades = FuncionalidadesGenerales()
+        funcionalidades.interfaz_inicio()
     else:
         print('El correo ya está asociado a un usuario')
 

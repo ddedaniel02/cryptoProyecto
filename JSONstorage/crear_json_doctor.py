@@ -10,3 +10,15 @@ class CrearJsonVet(CrearJson):
 
     def __init__(self):
         pass
+
+    def find_element(self, value, key, list = None):
+        """Find element in the file"""
+        if list == None:
+            data_list = self.load()
+            for item in data_list:
+                if item[key] == value:
+                    return item
+        else:
+            if list[key] == value:
+                return True
+        return False

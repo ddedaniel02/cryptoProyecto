@@ -1,10 +1,12 @@
 from JSONstorage.crear_json_expedientes import CrearJsonExpediente
 from Data.historial import Historial
+import random
 
 
 class Expediente:
     def __init__(self, nombre_mascota, sexo_mascota, nacimiento_mascota, especie, raza, nombre_completo_dueno,
                  telefono, direccion, alergias):
+        self.id = self.assign_id()
         self.nombre_mascota = nombre_mascota
         self.sexo_mascota = sexo_mascota
         self.nacimiento_mascota = nacimiento_mascota
@@ -23,3 +25,9 @@ class Expediente:
     def crear_historial(self, nombre_veterinario, fecha_observacion, observaciones):
         historial = Historial(nombre_veterinario, fecha_observacion, observaciones)
         historial.crear_data(self.historial)
+    def assign_id(self):
+        id = random.randrange(0,999)
+        expediente_storage = CrearJsonExpediente()
+        if not expediente_storage.find_element(id, 'id'):
+            return id
+        return self.assign_id()
