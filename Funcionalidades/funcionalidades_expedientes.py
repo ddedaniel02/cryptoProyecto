@@ -1,14 +1,18 @@
 from Data.expediente_paciente import Expediente
+from Funcionalidades.funciones_cripto import FuncionesCripto
+from JSONstorage.crear_json_expedientes import CrearJsonExpediente
 
 
 class FuncionalidadesExpediente:
+
+    def __init__(self, email):
+        self.email = email
 
     def interfaz_expediente(self):
         print('¿Qué deseas hacer?\n')
         print('- Crear Expediente de nuevo paciente (/crear-expediente)\n')
         print('- Eliminar Expediente (/eliminar-expediente)\n')
-        print('- Modificar Expediente (/modificar-expediente)\n')
-        print('- Añadir Notas al Historial del Paciente (/añadir-notas)\n')
+        print('- Visualizar Expediente (/ver-expediente\n')
         print('- Retroceder (/back)')
         comando = input('- ')
         self.elegir_funcionalidades(comando)
@@ -19,13 +23,11 @@ class FuncionalidadesExpediente:
             self.introducir_datos_expediente()
         elif comando == '/eliminar-expediente':
             self.eliminarExpediente()
-        elif comando == '/modificar-expediente':
-            self.modificarExpediente()
-        elif comando == '/añadir-notas':
-            self.añadirNotas()
+        elif comando == '/ver-expediente':
+            self.verExpediente()
         elif comando == '/back':
             from Funcionalidades.funcionalidades import FuncionalidadesGenerales
-            interfaz_inicio = FuncionalidadesGenerales()
+            interfaz_inicio = FuncionalidadesGenerales(self.email)
             interfaz_inicio.interfaz_inicio()
 
 
@@ -45,51 +47,64 @@ class FuncionalidadesExpediente:
         telefono = input('Telefono: ')
         direccion = input('Direccion: ')
 
+        cripto_funciones = FuncionesCripto()
+        telefono_cifrado = cripto_funciones.cifrado(telefono, self.email)
+        direccion_cifrado = cripto_funciones.cifrado(direccion, self.email)
+
 
         expediente_paciente = Expediente(nombre_mascota, sexo_mascota, nacimiento_mascota, especie, raza, alergias,
-                                         nombre_dueños, telefono, direccion)
+                                         nombre_dueños, telefono_cifrado, direccion_cifrado)
 
         print('Rellena su historial: ')
         nombre_veterinario = input('Nombre del veterinario que realizó la consulta: ')
         fecha_observacion = input('Fecha de cuando se realizó la consulta: ')
         observaciones = input('Observaciones realizadas durante la consulta: ')
 
-        expediente_paciente.crear_historial(nombre_veterinario, fecha_observacion, observaciones)
+        nombre_veterinario_cifrado = cripto_funciones.cifrado(nombre_veterinario,self.email)
+
+        expediente_paciente.crear_historial(nombre_veterinario_cifrado, fecha_observacion, observaciones)
         expediente_paciente.crear_expediente()
         print('Expediente creado')
         self.interfaz_expediente()
 
+    def verExpediente(self):
+        paciente_json = CrearJsonExpediente()
+        print('Por favor, escriba el ID del expediente que desee visualizar')
+        paciente_json.mostrar_expedientes()
+        stop = False
+        while not stop:
+            respuesta = input('- ')
+            item = paciente_json.find_element(respuesta, 'id')
+            if item:
+                stop = True
+            else:
+                print('Ese id no existe, por favor, inserte otro')
+        self.display_expediente(item)
+
+    def display_expediente(self, expediente):
+        cripto_funciones = FuncionesCripto()
+        for key in expediente:
+            if key == 'historial':
+                for item in expediente[key]:
+                    for fields in item:
+                        valor_print = item[fields]
+                        if fields == "nombre_veterinario":
+                            valor_print = cripto_funciones.descifrado(valor_print, self.email)
+                        print(fields+':'+valor_print)
+            else:
+                valor_print = expediente[key]
+                if (key == 'telefono') or (key == "direccion"):
+                    valor_print = cripto_funciones.descifrado(valor_print, self.email)
+                print(key+':'+valor_print)
+
+        stop = False
+        while not stop:
+            respuesta = input('Salir (/leave): ')
+            if respuesta == '/leave':
+                stop = True
+            else:
+                print('Comando desconocido')
+        self.interfaz_expediente()
 
 
 
-
-
-    """(está por ahora mal)"""
-    def rellenar_historial(self):
-        expediente = Expediente()
-        adding = True
-        while(adding):
-            continue_inserting = input('¿Quiéres añadir historial previo? (y/n)')
-
-            if continue_inserting == 'y':
-                nombre_veterinario = input('Nombre Veterinario: ')
-                observaciones = input('Observaciones: ')
-                conclusiones = input('Conclusiones: ')
-            elif continue_inserting == 'n':
-                adding = False
-
-
-
-    def eliminarExpediente(self):
-        pass
-
-    def modificarExpediente(self):
-        pass
-
-    def añadirNotas(self):
-        print('Rellena el nuevo historial: ')
-        nombre_veterinario = input('Nombre del veterinario que realizó la consulta: ')
-        fecha_observacion = input('Fecha de cuando se realizó la consulta: ')
-        observaciones = input('Observaciones realizadas durante la consulta: ')
-
-        expediente_paciente.crear_historial(nombre_veterinario, fecha_observacion, observaciones)

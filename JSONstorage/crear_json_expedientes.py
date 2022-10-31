@@ -9,3 +9,11 @@ class CrearJsonExpediente(CrearJson):
 
     def __init__(self):
         pass
+
+    def find_element(self, value, key):
+        """Find element in the file"""
+        data_list = self.load()
+        for item in data_list:
+            if item[key] == value:
+                return item
+        return False

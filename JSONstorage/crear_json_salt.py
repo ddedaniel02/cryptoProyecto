@@ -13,11 +13,5 @@ class CrearJsonSalt(CrearJson):
         data_list = self.load()
         for item in data_list:
             if item[key] == value:
-                return item['salt']
+                return item
         return 'Error a la hora de la administración de la cuenta'
-
-    def add_key(self, correo, clave):
-        data_list = self.load()
-        for item in data_list:
-            if item['user'] == correo:
-                item['access_code'] = clave

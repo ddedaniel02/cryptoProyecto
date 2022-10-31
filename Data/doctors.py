@@ -7,9 +7,7 @@ class Vet:
 
     """Clase Veterianrio"""
 
-    def __init__(self, nombre_completo: str, telefono: str, email: str, fecha_nacimiento: float, direccion: str,
-                 direccion_clinica: str, nombre_clinica: str, telefono_clinica: str, email_clinica: str,
-                 *especialidades: str):
+    def __init__(self, nombre_completo: str, telefono: str, email: str, fecha_nacimiento: float, direccion: str):
 
         """Atributos de la clase veterinario"""
 
@@ -18,11 +16,6 @@ class Vet:
         self.telefono = telefono
         self.email = email
         self.direccion = direccion
-        self.especialidades = especialidades
-        self.direccion_clinica = direccion_clinica
-        self.nombre_clinica = nombre_clinica
-        self.telefono_clinica = telefono_clinica
-        self.email_clinica = email_clinica
 
     def crear_usuario(self):
         user_store = CrearJsonVet()
