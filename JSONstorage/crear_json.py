@@ -1,6 +1,7 @@
 """Fichero contiene la clase de creación de archivos .json"""
 import json
 
+
 class CrearJson:
     _file_path = ""
 
