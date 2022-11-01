@@ -83,7 +83,7 @@ class FuncionesCripto:
     def get_salt(email):
         user_salt = CrearJsonSalt()
         item = user_salt.find_element(email, 'user')
-        salt  = item['salt']
+        salt = item['salt']
         salt_encripted = salt.encode('ISO-8859-1')
         return salt_encripted
 

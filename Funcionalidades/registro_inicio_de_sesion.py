@@ -1,10 +1,10 @@
 """Fichero de registro e inicio de sesión de doctores en la aplicación VetQuery"""
 import re
+from funciones_regex.func_regex import *
 from Data.doctors import Vet
 from Data.user_salt import UserSalt
 from JSONstorage.crear_json_doctor import CrearJsonVet
 from Funcionalidades.funcionalidades import FuncionalidadesGenerales
-
 from Funcionalidades.funciones_cripto import FuncionesCripto
 from cryptography.exceptions import InvalidKey
 
@@ -52,13 +52,13 @@ def inicio_sesion():
 
 def registro_usuario():
 
-    nombre_completo = input('\tNombre y Apellido(s): ')
-    #if not re.match("^\b([A-Za-z][-,a-z. ']+[ ]*)+$", nombre_completo):
-    telefono = input('\tTeléfono: ')
-    email = input('\tCorreo Electrónico: ')
-    fecha_nacimiento = float(input('\tFecha de nacimiento: '))
-    direccion = input('\tDirección: ')
-    codigo_acceso = input('\tCódigo de acceso: ')
+    nombre_completo = validar_regex(REGEX_NOMBRE_COMPLETO, '\tNombre y Apellido(s) [Aviso: No incluir tilde]: ')
+    telefono = validar_regex(REGEX_TELEFONO, '\tTeléfono [formato: +prfx num.telf]: ')
+    email = validar_regex(REGEX_EMAIL, '\tCorreo Electrónico [Únicos caracteres especiales aceptados son @ _ y .]: ')
+    fecha_nacimiento = validar_regex(REGEX_FECHA_NACIMIENTO, '\tFecha de nacimiento [YYYY-MM-DD]: ')
+    direccion = validar_regex(REGEX_DIRECCION, '\tDirección: ')
+    codigo_acceso = validar_regex(REGEX_CODIGO_ACCESO, '\tCódigo de acceso [Aviso: mín. 8 caracteres, 1 mayús, 1 minús '
+                                                       'y un caracter especial]: ')
 
     if not validar_usuario(email, 'email'):
         cripto_funciones = FuncionesCripto()

@@ -7,7 +7,7 @@ class Vet:
 
     """Clase Veterianrio"""
 
-    def __init__(self, nombre_completo: str, telefono: str, email: str, fecha_nacimiento: float, direccion: str):
+    def __init__(self, nombre_completo: str, telefono: str, email: str, fecha_nacimiento: str, direccion: str):
 
         """Atributos de la clase veterinario"""
 
