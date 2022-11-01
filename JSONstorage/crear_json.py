@@ -45,4 +45,4 @@ class CrearJson:
     def mostrar_expedientes(self):
         data_list = self.load()
         for item in data_list:
-            print(item['id']+' Nombre Dueño: '+item['nombre_completo_dueno']+' Nombre Mascota: '+item['nombre_mascota'])
+            print(item['id']+' Nombre Dueño: '+item['nombre_completo_propietario']+' Nombre Mascota: '+item['nombre_mascota'])

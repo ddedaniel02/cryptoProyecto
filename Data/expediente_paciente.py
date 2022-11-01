@@ -29,6 +29,9 @@ class Expediente:
     def assign_id(self):
         id = random.randrange(0,999)
         expediente_storage = CrearJsonExpediente()
-        if not expediente_storage.find_element(id, 'id'):
-            return str(id)
-        return self.assign_id()
+        assigned = False
+        while not assigned:
+            if not expediente_storage.find_element(id, 'id'):
+                assigned = True
+                return str(id)
+            id = random.randrange(0, 999)

@@ -1,6 +1,7 @@
 
 from JSONstorage.crear_json_doctor import CrearJsonVet
 from Funcionalidades.funciones_cripto import FuncionesCripto
+from cryptography.fernet import InvalidToken
 
 class FuncionalidadesUsuario:
     def __init__(self, email):
@@ -10,15 +11,22 @@ class FuncionalidadesUsuario:
         user_json = CrearJsonVet()
         cripto_funciones = FuncionesCripto()
         item = user_json.find_element(self.email, 'email')
+        error = False
 
-        nombre_descifrado = cripto_funciones.descifrado(item['nombre_completo'], self.email)
-        telefono_descifrado = cripto_funciones.descifrado(item['telefono'], self.email)
-        direccion_descifrada = cripto_funciones.descifrado(item['direccion'], self.email)
-
-        print('\tNombre y Apellidos: '+nombre_descifrado)
-        print('\tTelefono: ' + telefono_descifrado)
-        print('\tCorreo Electrónico: '+self.email)
-        print('\tDireccion: '+direccion_descifrada)
+        for key in item:
+            valor = item[key]
+            if key == 'nombre_completo' or key == 'telefono' or key == 'codigo_postal':
+                try:
+                    valor = cripto_funciones.descifrado(item[key], self.email)
+                except InvalidToken:
+                    print('Permisos denegados, acceso no permitido')
+                    error = True
+                    break
+            print(key+':'+valor)
+        if error:
+            from Funcionalidades.funcionalidades import FuncionalidadesGenerales
+            funciones_generales = FuncionalidadesGenerales(self.email)
+            funciones_generales.interfaz_inicio()
 
         stop = False
         while not stop:

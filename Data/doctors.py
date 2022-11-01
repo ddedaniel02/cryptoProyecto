@@ -15,7 +15,7 @@ class Vet:
         self.fecha_nacimiento = fecha_nacimiento
         self.telefono = telefono
         self.email = email
-        self.direccion = direccion
+        self.codigo_postal = codigo_postal
 
     def crear_usuario(self):
         user_store = CrearJsonVet()

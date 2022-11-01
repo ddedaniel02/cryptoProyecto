@@ -56,7 +56,7 @@ def registro_usuario():
     telefono = validar_regex(REGEX_TELEFONO, '\tTeléfono [formato: +prfx num.telf]: ')
     email = validar_regex(REGEX_EMAIL, '\tCorreo Electrónico [Únicos caracteres especiales aceptados son @ _ y .]: ')
     fecha_nacimiento = validar_regex(REGEX_FECHA_NACIMIENTO, '\tFecha de nacimiento [YYYY-MM-DD]: ')
-    direccion = validar_regex(REGEX_DIRECCION, '\tDirección: ')
+    codigo_postal = validar_regex(REGEX_CODIGO_POSTAL, '\tCodigo Postal: ')
     codigo_acceso = validar_regex(REGEX_CODIGO_ACCESO, '\tCódigo de acceso [Aviso: mín. 8 caracteres, 1 mayús, 1 minús '
                                                        'y un caracter especial]: ')
 
@@ -71,9 +71,9 @@ def registro_usuario():
 
         nombre_cifrado = cripto_funciones.cifrado(nombre_completo, email)
         telefono_cifrado = cripto_funciones.cifrado(telefono, email)
-        direccion_cifrada = cripto_funciones.cifrado(direccion, email)
+        codigo_postal_cifrado = cripto_funciones.cifrado(codigo_postal, email)
 
-        user_vet = Vet(nombre_cifrado, telefono_cifrado, email, fecha_nacimiento, direccion_cifrada)
+        user_vet = Vet(nombre_cifrado, telefono_cifrado, email, fecha_nacimiento, codigo_postal_cifrado)
         user_vet.crear_usuario()
         print('Usuario creado\n')
 

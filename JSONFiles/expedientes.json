@@ -1,39 +1,39 @@
 [
   {
-    "id": "340",
-    "nombre_mascota": "Perrogato",
+    "id": "259",
+    "usuario_creador": "gAAAAABjYWeh87LXSiqF6U7vroPBqM4FQ3A_Fa8e8w7zMoyi1cMv2PRZ9KDU5ki4YHGVIb6fcJCCm0DroT_I24uk3z_qOqIwzztprL-QXIqsU7xN2DjJVGA=",
+    "nombre_mascota": "PerroGato",
     "sexo_mascota": "M",
-    "nacimiento_mascota": "adas",
-    "especie": "Ninguna",
-    "raza": "as",
-    "nombre_completo_dueno": "Pablito",
-    "telefono": "gAAAAABjX7GrW9p_OFQ9oeQxIceRzwqpP7dh2q_Xhz-rKLl6WBcd5-IG-e1wX5o5JWMUIvJIi6rjZyYbO3N1eh6I7DxXzymzjg==",
-    "direccion": "gAAAAABjX7GrWHNhbQzKu_rHt0dEeGBiIXfreOwmOV3ymLvxEFEHLagZ2D0qZe1VnxMT3lVZXirnDfZmwmfqqylnf1mGjQwYjQ==",
-    "alergias": "as",
+    "nacimiento_mascota": "2012-07-20",
+    "especie": "Perro",
+    "raza": "Gato",
+    "nombre_completo_propietario": "Manolo Sanchez",
+    "telefono": "gAAAAABjYWehtQW8kNMafinmjhc6CcIbWUMMDgkLvHaHkE--8F0tVQP4qlgr6pwBlFE5zM5PUsIa4ukmZw0xWdHUC3MudbyNug==",
+    "codigo_postal": "gAAAAABjYWehg4bb1KtZOco-qVIjQa8-jia99Nljt4a5QIciRq7F5Siclhmw-YCa7_P9HHGYvn5cwCYcPO4-Y2Ust70RkUkvpQ==",
     "historial": [
       {
-        "nombre_veterinario": "gAAAAABjX7G0gMwM2Nb40eyQ3xLec37YHCovDLIOgFQ-I_lTJJFWbY7zf7Rzis5I05eCs8SDe3TXB7PTcsa9QeAZ4zzHUBOOaA==",
-        "fecha_observacion": "1321312",
-        "observaciones": "Esta bien"
+        "nombre_veterinario": "gAAAAABjYWe3ZtaXgLCAR1mjChPprzt8DZDOcAD2jQRpqHYD2jePzIszOc3v-wiYEPIZv01fcZuqA1Tu12hk0cV7fvrUVvLuMg==",
+        "fecha_observacion": "2020-11-30",
+        "observaciones": "Observaciones hechas. Todo correcto"
       }
     ]
   },
   {
-    "id": "271",
-    "nombre_mascota": "LLL",
+    "usuario_creador": "gAAAAABjYWvlLUgtRP-7yNShyT87PKHGzRS_wii6fJErsMXVU97NxUcGviVCT_2aLpbsl9N9jzg1NXDiVCk4m6v5qd9-Np5L3vx6pWo15EBlCFHxtn7ytAI=",
+    "id": "365",
+    "nombre_mascota": "Perro",
     "sexo_mascota": "M",
-    "nacimiento_mascota": "DASDA",
-    "especie": "asd",
-    "raza": "dasd",
-    "nombre_completo_dueno": "Javier Garcia",
-    "telefono": "gAAAAABjX7rCzfcvUX0WzuKYZWKT21isQjr00U2QKMIPJAPtvf8QEqb9wKHQx6LA-Yek82P6MzLS6MBUSLSpUOdTDxZC-4_7jg==",
-    "direccion": "gAAAAABjX7rCx2T3qd6ny_pGs2Kw45IsdHYRQ0hOQgfObwiAunB5cFafA8x7wksf4SLDdQl4irPuvF3-Dyfme2hkv0VajnsL9A==",
-    "alergias": "asd",
+    "nacimiento_mascota": "2020-05-11",
+    "especie": "Gato",
+    "raza": "Peludo",
+    "nombre_completo_propietario": "Daniel Garcia",
+    "telefono": "gAAAAABjYWvlj3-viEZ4oaKnnHgaehYuSLG1qLoy5zWQ8EdFVKLESjUzNIMj06t8SZ1uOAR0dR-Mr5MF_zUT1sshG1jutRSlBQ==",
+    "codigo_postal": "gAAAAABjYWvlExMV_evdf96xr3Yh3WDj1gUXVEPdrriYTpQla7G2dzyivSTp4JgnZjt6-PO9jCFOTLI6-3bsw8XYthTR5Is-ug==",
     "historial": [
       {
-        "nombre_veterinario": "gAAAAABjX7rIiRzVFy0DavzIEQwxAr4HdZjyY4y6qGKNvuf8Rnsw6LNZn65w5HKwqW-ugHp3rBMjye43fvUnU2dggGmy1o6ixA==",
-        "fecha_observacion": "asdasd",
-        "observaciones": "adsas"
+        "nombre_veterinario": "gAAAAABjYWv-rs79oRhMDdU1H3dFVa0ikpRtc8IINx6cKrVc__WtIu5vLS0-wrMFLLC57iAMCuda-yb9UA795Q7McTuL1MxGeA==",
+        "fecha_observacion": "2021-09-10",
+        "observaciones": "Observaciones hechas"
       }
     ]
   }

@@ -7,8 +7,7 @@ REGEX_NOMBRE_COMPLETO = "([A-Z][-,a-z. ']+[ ]*){2,}"
 REGEX_TELEFONO = "\+([1-9]){1,3}\s[1-9][0-9]{8}"
 REGEX_EMAIL = "[A-Za-z0-9._]+@[a-z0-9]+\.([a-z0-9]+\.)?[a-z]{2,3}"
 REGEX_FECHA_NACIMIENTO = "[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])"
-REGEX_DIRECCION = "[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)*" \
-                  "(((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)"
+REGEX_CODIGO_POSTAL = "^\d{5}$"
 REGEX_CODIGO_ACCESO = "(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}"
 
 
