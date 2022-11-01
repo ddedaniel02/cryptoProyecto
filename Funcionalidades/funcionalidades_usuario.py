@@ -1,13 +1,19 @@
+"""Fichero contiene clase para las funcionalidades disponibles con respecto al usuario mismo"""
 
 from JSONstorage.crear_json_doctor import CrearJsonVet
 from Funcionalidades.funciones_cripto import FuncionesCripto
 from cryptography.fernet import InvalidToken
 
 class FuncionalidadesUsuario:
+    """Clase que dispone de las funcionalidades vinculadas al usuario de la aplicación"""
+
     def __init__(self, email):
+        """Campo común en todas las operaciones realizadas por el veterinario (con sesión iniciada) que requieren
+        de su información específica para realizarlas"""
         self.email = email
 
     def interfaces_usuario(self):
+        """Presenta la interfaz"""
         user_json = CrearJsonVet()
         cripto_funciones = FuncionesCripto()
         item = user_json.find_element(self.email, 'email')

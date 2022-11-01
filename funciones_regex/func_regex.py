@@ -10,9 +10,14 @@ REGEX_FECHA_NACIMIENTO = "[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])"
 REGEX_CODIGO_POSTAL = "^\d{5}$"
 REGEX_CODIGO_ACCESO = "(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}"
 
+# Expresiones regulares para los campos de
+REGEX_NOMBRE_ESPECIE_RAZA_MASCOTA = "([a-zA-Z-]+[ ]?){1,}"
+REGEX_SEXO_MASCOTA = "(M|F){1}"
+REGEX_OBSERVACIONES = "([a-zA-Z0-9'-,.]+[ ]?){1,}"
 
 def validar_regex(regex: str, info_requerida: str) -> str:
     """Retorna el dato introducido por el usuario tras confirmar que sigue el formato válido"""
+
     while True:
         dato_entrada = input(info_requerida)
         if re.fullmatch(regex, dato_entrada):

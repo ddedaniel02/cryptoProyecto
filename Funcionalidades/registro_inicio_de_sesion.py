@@ -10,6 +10,7 @@ from cryptography.exceptions import InvalidKey
 
 
 def inicio_aplicacion():
+    """Permite ejecutar el conjunto de la aplicación"""
 
     respuesta_valida = False
     while not respuesta_valida:
@@ -22,12 +23,13 @@ def inicio_aplicacion():
             registro_usuario()
         elif respuesta == '/salir':
             respuesta_valida = True
-            print('Hasta la próxima')
+            print('¡Hasta la próxima!')
         else:
-            print('ERROR: La opción introducida no es válida\n')
+            print('[ERROR]: La opción introducida no es válida\n')
 
 
 def inicio_sesion():
+    """Permite al usuario acceder al inicio de sesión"""
 
     sesion_iniciada = False
     while not sesion_iniciada:
@@ -38,7 +40,6 @@ def inicio_sesion():
         try:
             funcion_cripto.verificar_codigo_acceso(codigo_acceso, correo_electronico)
             sesion_iniciada = True
-
         except TypeError:
             print('Correo incorrecto')
         except InvalidKey:
@@ -46,20 +47,24 @@ def inicio_sesion():
 
     print('Acceso concedido\n')
 
+    # Traslada al usuario al menu de la aplicación (distinto del de inicio-registro)
     funcionalidades = FuncionalidadesGenerales(correo_electronico)
     funcionalidades.interfaz_inicio()
 
 
 def registro_usuario():
+    """Permite al usuario acceder al registro de usuario"""
 
+    # Comprueba que las entradas de cada campo sigue el formato permitido
     nombre_completo = validar_regex(REGEX_NOMBRE_COMPLETO, '\tNombre y Apellido(s) [Aviso: No incluir tilde]: ')
-    telefono = validar_regex(REGEX_TELEFONO, '\tTeléfono [formato: +prfx num.telf]: ')
+    telefono = validar_regex(REGEX_TELEFONO, '\tTeléfono [formato: +prfx (espacio) num.telf]: ')
     email = validar_regex(REGEX_EMAIL, '\tCorreo Electrónico [Únicos caracteres especiales aceptados son @ _ y .]: ')
     fecha_nacimiento = validar_regex(REGEX_FECHA_NACIMIENTO, '\tFecha de nacimiento [YYYY-MM-DD]: ')
     codigo_postal = validar_regex(REGEX_CODIGO_POSTAL, '\tCodigo Postal: ')
     codigo_acceso = validar_regex(REGEX_CODIGO_ACCESO, '\tCódigo de acceso [Aviso: mín. 8 caracteres, 1 mayús, 1 minús '
-                                                       'y un caracter especial]: ')
+                                                       ', un caracter especial y al menos un número]: ')
 
+    # Comprueba si el usuario ya esta registrado
     if not validar_usuario(email, 'email'):
         cripto_funciones = FuncionesCripto()
 
@@ -77,6 +82,7 @@ def registro_usuario():
         user_vet.crear_usuario()
         print('Usuario creado\n')
 
+        # Traslada al usuario al menu de la aplicación (distinto del de inicio-registro)
         funcionalidades = FuncionalidadesGenerales(email)
         funcionalidades.interfaz_inicio()
     else:
@@ -84,6 +90,7 @@ def registro_usuario():
 
 
 def validar_usuario(correo, campo_correo):
+    """Comprueba si el usuario ya existe"""
 
     user_store = CrearJsonVet()
     user_found = user_store.find_element(correo, campo_correo)

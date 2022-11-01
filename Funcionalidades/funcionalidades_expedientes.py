@@ -1,3 +1,5 @@
+"""Fichero contiene la clase para las funcionalidades específicas de los expedientes"""
+
 from Data.expediente_paciente import Expediente
 from Funcionalidades.funciones_cripto import FuncionesCripto
 from JSONstorage.crear_json_expedientes import CrearJsonExpediente
@@ -6,11 +8,17 @@ from funciones_regex.func_regex import *
 from cryptography.fernet import InvalidToken
 
 class FuncionalidadesExpediente:
+    """Clase para las funcionalidades de los expedientes"""
 
     def __init__(self, email):
+        """Campo común en todas las operaciones realizadas por el veterinario (con sesión iniciada) que requieren
+        de su información específica para realizarlas"""
+
         self.email = email
 
     def interfaz_expediente(self):
+        """Presenta las operaciones a realizar por parte del veterinario en lo que respecta a expedientes"""
+
         print('¿Qué deseas hacer?\n')
         print('- Crear Expediente de nuevo paciente (/crear-expediente)\n')
         print('- Eliminar Expediente (/eliminar-expediente)\n')
@@ -20,6 +28,8 @@ class FuncionalidadesExpediente:
         self.elegir_funcionalidades(comando)
 
     def elegir_funcionalidades(self, comando):
+        """Toma el comando de entrada del usuario y lo ejecuta. Si el comando no es válido, vuelve a presentar la
+        interfaz del expediente"""
 
         if comando == '/crear-expediente':
             self.introducir_datos_expediente()
@@ -36,6 +46,7 @@ class FuncionalidadesExpediente:
             self.interfaz_expediente()
 
     def introducir_datos_expediente(self):
+        """Permite al veterinario crear un nuevo expediente"""
 
         print('- Creación de expediente')
         nombre_mascota = validar_regex(REGEX_NOMBRE_ESPECIE_RAZA_MASCOTA, '\tNombre de la mascota: ')
@@ -73,6 +84,9 @@ class FuncionalidadesExpediente:
         self.interfaz_expediente()
 
     def verExpediente(self):
+        """Permite al veterianio visualizar cualquiera de los expedientes que este tiene asignado. Para ello, el
+        veterinario debe especificar el expediente que desea"""
+
         paciente_json = CrearJsonExpediente()
         print('Por favor, escriba el ID del expediente que desee visualizar')
         paciente_json.mostrar_expedientes()
@@ -95,6 +109,8 @@ class FuncionalidadesExpediente:
             self.display_expediente(item)
 
     def display_expediente(self, expediente):
+        """Muestra el expediente especificado por el veterinario"""
+
         cripto_funciones = FuncionesCripto()
         error = False
         for key in expediente:
@@ -126,6 +142,3 @@ class FuncionalidadesExpediente:
             else:
                 print('Comando desconocido')
         self.interfaz_expediente()
-
-
-
