@@ -10,6 +10,7 @@ class UserSalt:
 
     def __init__(self, user, salt_contraseña, salt_cifrado, key):
         """Campos a guardar en la DB externa: email del usuario, su salt y contraseña ya resumida"""
+
         self.user = user
         self.salt_contraseña = salt_contraseña
         self.salt_cifrado = salt_cifrado

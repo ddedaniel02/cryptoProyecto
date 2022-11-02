@@ -63,7 +63,6 @@ class FuncionalidadesExpediente:
         codigo_postal_cifrado = cripto_funciones.cifrado(codigo_postal, self.email, self.password)
         usuario_creador_cifrado = cripto_funciones.cifrado(self.email, self.email, self.password)
 
-
         expediente_paciente = Expediente(usuario_creador_cifrado, nombre_mascota, sexo_mascota, nacimiento_mascota,
                                          especie, raza, nombre_dueños, telefono_cifrado, codigo_postal_cifrado)
 

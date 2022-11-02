@@ -18,7 +18,7 @@ class Expediente:
         self.sexo_mascota = sexo_mascota
         self.nacimiento_mascota = nacimiento_mascota
         self.especie = especie
-        self. raza = raza
+        self.raza = raza
         self.nombre_completo_propietario = nombre_completo_propietario
         self.telefono = telefono
         self.codigo_postal = codigo_postal
@@ -39,7 +39,7 @@ class Expediente:
     def assign_id(self) -> str:
         """Asigna un ID todavía no tomado al expediente de la mascota o lo recupera si ya lo tiene"""
 
-        id = random.randrange(0,999)
+        id = random.randrange(0, 999)
         expediente_storage = CrearJsonExpediente()
         assigned = False
         while not assigned:

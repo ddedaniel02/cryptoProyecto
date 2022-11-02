@@ -4,6 +4,7 @@ from JSONstorage.crear_json_doctor import CrearJsonVet
 from Funcionalidades.funciones_cripto import FuncionesCripto
 from cryptography.fernet import InvalidToken
 
+
 class FuncionalidadesUsuario:
     """Clase que dispone de las funcionalidades vinculadas al usuario de la aplicación"""
 
@@ -14,7 +15,7 @@ class FuncionalidadesUsuario:
         self.password = password
 
     def interfaces_usuario(self):
-        """Presenta la interfaz"""
+        """Presenta la interfaz vinculada a los datos del usuario"""
         user_json = CrearJsonVet()
         cripto_funciones = FuncionesCripto()
         item = user_json.find_element(self.email, 'email')

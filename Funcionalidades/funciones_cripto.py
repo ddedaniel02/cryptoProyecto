@@ -1,3 +1,4 @@
+"""Fichero contiene clase que permite realizar las operaciones de criptografía necesarias en la aplicación"""
 
 import os
 import base64
@@ -13,6 +14,7 @@ class FuncionesCripto:
     def __init__(self):
         pass
 
+    # Función para realizar el hash
     @staticmethod
     def hashing(codigo_acceso: str, salt_contraseña):
         cod_acc_bits = bytes(codigo_acceso, 'ISO-8859-1')
@@ -28,6 +30,7 @@ class FuncionesCripto:
         key = key.decode('ISO-8859-1')
         return key
 
+    # Función para verificar la contraseña de usuario
     def verificar_codigo_acceso(self, codigo_acceso, email):
         cod_acc_bits = bytes(codigo_acceso, 'ISO-8859-1')
         salt_contraseña = self.get_salt(email, 'contraseña')
@@ -41,16 +44,17 @@ class FuncionesCripto:
         key = self.get_key(email)
         kdf.verify(cod_acc_bits, key)
 
+    # Función que recupera la clave del usuario de la DB
     @staticmethod
     def get_key(email):
-
         usuario_salt = CrearJsonSalt()
         item = usuario_salt.find_element(email, 'user')
         key = item['key']
         key = key.encode('ISO-8859-1')
         return key
 
-    def cifrado(self,valor_cifrar, email, password):
+    # Función para el cifrado
+    def cifrado(self, valor_cifrar, email, password):
         valor_bytes = bytes(valor_cifrar, 'ISO-8859-1')
         password_bytes = bytes(password, 'ISO-8859-1')
         salt_cifrado = self.get_salt(email, 'cifrado')
@@ -69,6 +73,7 @@ class FuncionesCripto:
         valor_cifrado = valor_encriptado.decode('ISO-8859-1')
         return valor_cifrado
 
+    # Función para el descifrado
     def descifrado(self, valor_descifrar, email, password):
         valor_bytes = bytes(valor_descifrar, 'ISO-8859-1')
         password_bytes = bytes(password, 'ISO-8859-1')
@@ -88,12 +93,14 @@ class FuncionesCripto:
         valor = valor_retorno.decode('ISO-8859-1')
         return valor
 
+    # Función para generar el salt
     @staticmethod
     def generar_salt():
         salt = os.urandom(16)
         salt_str = salt.decode('ISO-8859-1')
         return salt_str
 
+    # Función para rescatar de la DB el salt del usuario indicado
     @staticmethod
     def get_salt(email, tipo):
         user_salt = CrearJsonSalt()
