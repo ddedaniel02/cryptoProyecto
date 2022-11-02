@@ -14,11 +14,11 @@ class FuncionesCripto:
         pass
 
     @staticmethod
-    def hashing(codigo_acceso: str, salt):
+    def hashing(codigo_acceso: str, salt_contraseña):
         cod_acc_bits = bytes(codigo_acceso, 'ISO-8859-1')
-        salt = salt.encode('ISO-8859-1')
+        salt_contraseña = salt_contraseña.encode('ISO-8859-1')
         kdf = Scrypt(
-            salt=salt,
+            salt=salt_contraseña,
             length=32,
             n=2 ** 14,
             r=8,
@@ -30,9 +30,9 @@ class FuncionesCripto:
 
     def verificar_codigo_acceso(self, codigo_acceso, email):
         cod_acc_bits = bytes(codigo_acceso, 'ISO-8859-1')
-        salt = self.get_salt(email)
+        salt_contraseña = self.get_salt(email, 'contraseña')
         kdf = Scrypt(
-            salt=salt,
+            salt=salt_contraseña,
             length=32,
             n=2 ** 14,
             r=8,
@@ -50,11 +50,18 @@ class FuncionesCripto:
         key = key.encode('ISO-8859-1')
         return key
 
-    def cifrado(self,valor_cifrar, email):
-
+    def cifrado(self,valor_cifrar, email, password):
         valor_bytes = bytes(valor_cifrar, 'ISO-8859-1')
-        key = self.get_key(email)
-
+        password_bytes = bytes(password, 'ISO-8859-1')
+        salt_cifrado = self.get_salt(email, 'cifrado')
+        kdf = Scrypt(
+            salt=salt_cifrado,
+            length=32,
+            n=2 ** 14,
+            r=8,
+            p=1,
+        )
+        key = kdf.derive(password_bytes)
         key_base64 = base64.urlsafe_b64encode(key)
         fernet = Fernet(key_base64)
 
@@ -62,10 +69,18 @@ class FuncionesCripto:
         valor_cifrado = valor_encriptado.decode('ISO-8859-1')
         return valor_cifrado
 
-    def descifrado(self, valor_descifrar, email):
+    def descifrado(self, valor_descifrar, email, password):
         valor_bytes = bytes(valor_descifrar, 'ISO-8859-1')
-        key = self.get_key(email)
-
+        password_bytes = bytes(password, 'ISO-8859-1')
+        salt_cifrado = self.get_salt(email, 'cifrado')
+        kdf = Scrypt(
+            salt=salt_cifrado,
+            length=32,
+            n=2 ** 14,
+            r=8,
+            p=1,
+        )
+        key = kdf.derive(password_bytes)
         key_base64 = base64.urlsafe_b64encode(key)
         fernet = Fernet(key_base64)
 
@@ -80,10 +95,14 @@ class FuncionesCripto:
         return salt_str
 
     @staticmethod
-    def get_salt(email):
+    def get_salt(email, tipo):
         user_salt = CrearJsonSalt()
         item = user_salt.find_element(email, 'user')
-        salt = item['salt']
-        salt_encripted = salt.encode('ISO-8859-1')
+        if tipo == 'cifrado':
+            salt_cifrado = item['salt_cifrado']
+            salt_encripted = salt_cifrado.encode('ISO-8859-1')
+            return salt_encripted
+        salt_contraseña = item['salt_contraseña']
+        salt_encripted = salt_contraseña.encode('ISO-8859-1')
         return salt_encripted
 

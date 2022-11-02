@@ -7,10 +7,11 @@ from cryptography.fernet import InvalidToken
 class FuncionalidadesUsuario:
     """Clase que dispone de las funcionalidades vinculadas al usuario de la aplicación"""
 
-    def __init__(self, email):
+    def __init__(self, email, password):
         """Campo común en todas las operaciones realizadas por el veterinario (con sesión iniciada) que requieren
         de su información específica para realizarlas"""
         self.email = email
+        self.password = password
 
     def interfaces_usuario(self):
         """Presenta la interfaz"""
@@ -18,12 +19,11 @@ class FuncionalidadesUsuario:
         cripto_funciones = FuncionesCripto()
         item = user_json.find_element(self.email, 'email')
         error = False
-
         for key in item:
             valor = item[key]
             if key == 'nombre_completo' or key == 'telefono' or key == 'codigo_postal':
                 try:
-                    valor = cripto_funciones.descifrado(item[key], self.email)
+                    valor = cripto_funciones.descifrado(item[key], self.email, self.password)
                 except InvalidToken:
                     print('Permisos denegados, acceso no permitido')
                     error = True
@@ -31,18 +31,18 @@ class FuncionalidadesUsuario:
             print(key+':'+valor)
         if error:
             from Funcionalidades.funcionalidades import FuncionalidadesGenerales
-            funciones_generales = FuncionalidadesGenerales(self.email)
+            funciones_generales = FuncionalidadesGenerales(self.email, self.password)
             funciones_generales.interfaz_inicio()
 
         stop = False
         while not stop:
-            respuesta = input('Salir /leave: ')
+            respuesta = input('Salir (/leave): ')
             if respuesta == '/leave':
                 stop = True
             else:
                 print('Comando desconocido')
         from Funcionalidades.funcionalidades import FuncionalidadesGenerales
-        funciones_generales = FuncionalidadesGenerales(self.email)
+        funciones_generales = FuncionalidadesGenerales(self.email, self.password)
         funciones_generales.interfaz_inicio()
 
 

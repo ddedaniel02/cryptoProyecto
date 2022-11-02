@@ -10,18 +10,18 @@ from cryptography.fernet import InvalidToken
 class FuncionalidadesExpediente:
     """Clase para las funcionalidades de los expedientes"""
 
-    def __init__(self, email):
+    def __init__(self, email, password):
         """Campo común en todas las operaciones realizadas por el veterinario (con sesión iniciada) que requieren
         de su información específica para realizarlas"""
 
         self.email = email
+        self.password = password
 
     def interfaz_expediente(self):
         """Presenta las operaciones a realizar por parte del veterinario en lo que respecta a expedientes"""
 
         print('¿Qué deseas hacer?\n')
         print('- Crear Expediente de nuevo paciente (/crear-expediente)\n')
-        print('- Eliminar Expediente (/eliminar-expediente)\n')
         print('- Visualizar Expediente (/ver-expediente)\n')
         print('- Retroceder (/back)')
         comando = input('- ')
@@ -33,13 +33,11 @@ class FuncionalidadesExpediente:
 
         if comando == '/crear-expediente':
             self.introducir_datos_expediente()
-        elif comando == '/eliminar-expediente':
-            self.eliminarExpediente()
         elif comando == '/ver-expediente':
             self.verExpediente()
         elif comando == '/back':
             from Funcionalidades.funcionalidades import FuncionalidadesGenerales
-            interfaz_inicio = FuncionalidadesGenerales(self.email)
+            interfaz_inicio = FuncionalidadesGenerales(self.email, self.password)
             interfaz_inicio.interfaz_inicio()
         else:
             print('ERROR: Opción introducida no válida')
@@ -61,9 +59,9 @@ class FuncionalidadesExpediente:
         codigo_postal = validar_regex(REGEX_CODIGO_POSTAL, '\tCodigo Postal: ')
 
         cripto_funciones = FuncionesCripto()
-        telefono_cifrado = cripto_funciones.cifrado(telefono, self.email)
-        codigo_postal_cifrado = cripto_funciones.cifrado(codigo_postal, self.email)
-        usuario_creador_cifrado = cripto_funciones.cifrado(self.email, self.email)
+        telefono_cifrado = cripto_funciones.cifrado(telefono, self.email, self.password)
+        codigo_postal_cifrado = cripto_funciones.cifrado(codigo_postal, self.email, self.password)
+        usuario_creador_cifrado = cripto_funciones.cifrado(self.email, self.email, self.password)
 
 
         expediente_paciente = Expediente(usuario_creador_cifrado, nombre_mascota, sexo_mascota, nacimiento_mascota,
@@ -76,7 +74,7 @@ class FuncionalidadesExpediente:
                                           '\tFecha de cuando se realizó la consulta[YYYY-MM-DD]: ')
         observaciones = validar_regex(REGEX_OBSERVACIONES, '\tObservaciones realizadas durante la consulta: ')
 
-        nombre_veterinario_cifrado = cripto_funciones.cifrado(nombre_veterinario,self.email)
+        nombre_veterinario_cifrado = cripto_funciones.cifrado(nombre_veterinario,self.email, self.password)
 
         expediente_paciente.crear_historial(nombre_veterinario_cifrado, fecha_observacion, observaciones)
         expediente_paciente.crear_expediente()
@@ -90,12 +88,12 @@ class FuncionalidadesExpediente:
         paciente_json = CrearJsonExpediente()
         print('Por favor, escriba el ID del expediente que desee visualizar')
         paciente_json.mostrar_expedientes()
-        print('Salir (/back)')
+        print('Salir (/leave)')
         stop = False
 
         while not stop:
             respuesta = input('- ')
-            if respuesta == '/back':
+            if respuesta == '/leave':
                 stop = True
             else:
                 item = paciente_json.find_element(respuesta, 'id')
@@ -103,7 +101,7 @@ class FuncionalidadesExpediente:
                     stop = True
                 else:
                     print('Ese id no existe, por favor, inserte otro')
-        if respuesta == '/back':
+        if respuesta == '/leave':
             self.interfaz_expediente()
         else:
             self.display_expediente(item)
@@ -118,7 +116,7 @@ class FuncionalidadesExpediente:
                 valor_print = expediente[key]
                 if (key == 'telefono') or (key == "codigo_postal") or (key == 'usuario_creador'):
                     try:
-                        valor_print = cripto_funciones.descifrado(valor_print, self.email)
+                        valor_print = cripto_funciones.descifrado(valor_print, self.email, self.password)
                     except InvalidToken:
                         print('Permiso denegado, acceso no permitido')
                         error = True
@@ -130,15 +128,14 @@ class FuncionalidadesExpediente:
                     for fields in item:
                         valor_print = item[fields]
                         if fields == "nombre_veterinario":
-                            valor_print = cripto_funciones.descifrado(valor_print, self.email)
+                            valor_print = cripto_funciones.descifrado(valor_print, self.email, self.password)
                         print(fields+':'+valor_print)
-        if error:
-            self.interfaz_expediente()
-        stop = False
-        while not stop:
-            respuesta = input('Salir (/leave): ')
-            if respuesta == '/leave':
-                stop = True
-            else:
-                print('Comando desconocido')
+        if not error:
+            stop = False
+            while not stop:
+                respuesta = input('Salir (/leave): ')
+                if respuesta == '/leave':
+                    stop = True
+                else:
+                    print('Comando desconocido')
         self.interfaz_expediente()

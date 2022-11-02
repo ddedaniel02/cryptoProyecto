@@ -32,24 +32,33 @@ def inicio_sesion():
     """Permite al usuario acceder al inicio de sesión"""
 
     sesion_iniciada = False
-    while not sesion_iniciada:
+    back = False
+    while not sesion_iniciada and not back:
+        print('Si desea volver atrás, escriba /back en cualquiera de los campos, por favor')
         correo_electronico = input('Introduce tu correo electrónico: ')
         codigo_acceso = input('Introduce tu contraseña: ')
 
         funcion_cripto = FuncionesCripto()
         try:
-            funcion_cripto.verificar_codigo_acceso(codigo_acceso, correo_electronico)
-            sesion_iniciada = True
+            if correo_electronico == '/back' or codigo_acceso == '/back':
+                back = True
+            else:
+                funcion_cripto.verificar_codigo_acceso(codigo_acceso, correo_electronico)
+                sesion_iniciada = True
         except TypeError:
             print('Correo incorrecto')
         except InvalidKey:
             print('ERROR: Las contraseñas no coinciden\n')
 
-    print('Acceso concedido\n')
+    if back:
+        print('Volviendo atrás')
+        inicio_aplicacion()
+    else:
+        print('Acceso concedido\n')
 
-    # Traslada al usuario al menu de la aplicación (distinto del de inicio-registro)
-    funcionalidades = FuncionalidadesGenerales(correo_electronico)
-    funcionalidades.interfaz_inicio()
+        # Traslada al usuario al menu de la aplicación (distinto del de inicio-registro)
+        funcionalidades = FuncionalidadesGenerales(correo_electronico, codigo_acceso)
+        funcionalidades.interfaz_inicio()
 
 
 def registro_usuario():
@@ -68,22 +77,23 @@ def registro_usuario():
     if not validar_usuario(email, 'email'):
         cripto_funciones = FuncionesCripto()
 
-        salt = cripto_funciones.generar_salt()
-        key_value = cripto_funciones.hashing(codigo_acceso, salt)
+        salt_contraseña = cripto_funciones.generar_salt()
+        salt_cifrado = cripto_funciones.generar_salt()
+        key_value = cripto_funciones.hashing(codigo_acceso, salt_contraseña)
 
-        user_salt = UserSalt(email, salt, key_value)
+        user_salt = UserSalt(email, salt_contraseña, salt_cifrado, key_value)
         user_salt.crear_base_datos()
 
-        nombre_cifrado = cripto_funciones.cifrado(nombre_completo, email)
-        telefono_cifrado = cripto_funciones.cifrado(telefono, email)
-        codigo_postal_cifrado = cripto_funciones.cifrado(codigo_postal, email)
+        nombre_cifrado = cripto_funciones.cifrado(nombre_completo, email, codigo_acceso)
+        telefono_cifrado = cripto_funciones.cifrado(telefono, email, codigo_acceso)
+        codigo_postal_cifrado = cripto_funciones.cifrado(codigo_postal, email, codigo_acceso)
 
         user_vet = Vet(nombre_cifrado, telefono_cifrado, email, fecha_nacimiento, codigo_postal_cifrado)
         user_vet.crear_usuario()
         print('Usuario creado\n')
 
         # Traslada al usuario al menu de la aplicación (distinto del de inicio-registro)
-        funcionalidades = FuncionalidadesGenerales(email)
+        funcionalidades = FuncionalidadesGenerales(email, codigo_acceso)
         funcionalidades.interfaz_inicio()
     else:
         print('El correo ya está asociado a un usuario\n')

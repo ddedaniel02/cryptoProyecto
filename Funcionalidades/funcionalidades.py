@@ -7,10 +7,11 @@ from Funcionalidades.funcionalidades_usuario import FuncionalidadesUsuario
 class FuncionalidadesGenerales:
     """Clase para las funcionalidades de la interfaz principal"""
 
-    def __init__(self, email):
+    def __init__(self, email, password):
         """Campo común en todas las operaciones realizadas por el veterinario (con sesión iniciada) que requieren
         de su información específica para realizarlas"""
         self.email = email
+        self.password = password
 
     def interfaz_inicio(self):
         """Presenta las operaciones a realizar por parte del veterinario una vez este tiene su sesión activa"""
@@ -27,11 +28,11 @@ class FuncionalidadesGenerales:
         mostrar la interfaz principal"""
 
         if input == '/funciones-user':
-            funciones_user = FuncionalidadesUsuario(self.email)
+            funciones_user = FuncionalidadesUsuario(self.email, self.password)
             funciones_user.interfaces_usuario()
         elif input == '/funciones-exp':
 
-            funciones_expediente = FuncionalidadesExpediente(self.email)
+            funciones_expediente = FuncionalidadesExpediente(self.email, self.password)
             funciones_expediente.interfaz_expediente()
         elif input == '/log-out':
 
