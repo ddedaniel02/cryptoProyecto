@@ -24,3 +24,14 @@ def validar_regex(regex: str, info_requerida: str) -> str:
             return dato_entrada
         else:
             print("ERROR: Dato de entrada no válido\n")
+
+def validar_regex_password(regex: str, info_requerida: str) -> str:
+    """Retorna el dato introducido por el usuario tras confirmar que sigue el formato válido"""
+
+    dato_entrada = input(info_requerida)
+    if re.fullmatch(regex, dato_entrada):
+        return dato_entrada
+    else:
+        raise Exception('Formato de contraseña incorrecto')
+
+

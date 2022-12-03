@@ -4,5 +4,5 @@ from pathlib import Path
 
 # [INFORMACIÓN]: PARA EL CORRECTO FUNCIONAMIENTO DE LA APLICACIÓN EN RELACIÓN A LOS FICHEROS .JSON, AJUSTE
 # LA SIGUIENTE RUTA (si lo viera necesario)
-JSON_FILES_PATH = str(Path.home()) + "/cryptoProyecto/JSONFiles/"
+JSON_FILES_PATH = str(Path.home()) + "/8216_E1_app/JSONFiles/"
 

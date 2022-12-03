@@ -65,7 +65,7 @@ def registro_usuario():
     """Permite al usuario acceder al registro de usuario"""
 
     # Comprueba que las entradas de cada campo sigue el formato permitido
-    nombre_completo = validar_regex(REGEX_NOMBRE_COMPLETO, '\tNombre y Apellido(s) [Aviso: No incluir tilde]: ')
+    nombre_completo = validar_regex(REGEX_NOMBRE_COMPLETO, '\tNombre y Apellido(s) [Aviso: No incluir tilde ni ñ]: ')
     telefono = validar_regex(REGEX_TELEFONO, '\tTeléfono [formato: +prfx (espacio) num.telf]: ')
     email = validar_regex(REGEX_EMAIL, '\tCorreo Electrónico [Únicos caracteres especiales aceptados son @ _ y .]: ')
     fecha_nacimiento = validar_regex(REGEX_FECHA_NACIMIENTO, '\tFecha de nacimiento [YYYY-MM-DD]: ')
@@ -77,11 +77,11 @@ def registro_usuario():
     if not validar_usuario(email, 'email'):
         cripto_funciones = FuncionesCripto()
 
-        salt_contraseña = cripto_funciones.generar_salt()
+        salt_password = cripto_funciones.generar_salt()
         salt_cifrado = cripto_funciones.generar_salt()
-        key_value = cripto_funciones.hashing(codigo_acceso, salt_contraseña)
+        key_value = cripto_funciones.hashing(codigo_acceso, salt_password)
 
-        user_salt = UserSalt(email, salt_contraseña, salt_cifrado, key_value)
+        user_salt = UserSalt(email, salt_password, salt_cifrado, key_value)
         user_salt.crear_base_datos()
 
         nombre_cifrado = cripto_funciones.cifrado(nombre_completo, email, codigo_acceso)

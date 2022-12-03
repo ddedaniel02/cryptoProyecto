@@ -48,4 +48,4 @@ class CrearJson:
         """Permite mostrar los expedientes disponibles"""
         data_list = self.load()
         for item in data_list:
-            print(item['id']+' Nombre Dueño: '+item['nombre_completo_propietario']+' Nombre Mascota: '+item['nombre_mascota'])
+            print('ID: '+item['id']+' Nombre Dueño: '+item['nombre_completo_propietario']+' Nombre Mascota: '+item['nombre_mascota'])

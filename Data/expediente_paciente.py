@@ -1,6 +1,7 @@
 """Fichero contiene la clase de los expedientes de los pacientes vinculados a cada veterinario"""
 
 from JSONstorage.crear_json_expedientes import CrearJsonExpediente
+from Funcionalidades.funcionalidades_firma import FuncionalidadesFirma
 from Data.historial import Historial
 import random
 
@@ -47,3 +48,9 @@ class Expediente:
                 assigned = True
                 return str(id)
             id = random.randrange(0, 999)
+    def cargar_firma(self):
+        funciones_firma = FuncionalidadesFirma()
+        return funciones_firma.load_key()
+    def crear_firma(self, private_key):
+        funciones_firma = FuncionalidadesFirma()
+        funciones_firma.crear_firma(self.id, private_key)

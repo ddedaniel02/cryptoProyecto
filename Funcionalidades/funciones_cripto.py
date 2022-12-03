@@ -16,11 +16,11 @@ class FuncionesCripto:
 
     # Función para realizar el hash
     @staticmethod
-    def hashing(codigo_acceso: str, salt_contraseña):
+    def hashing(codigo_acceso: str, salt_password):
         cod_acc_bits = bytes(codigo_acceso, 'ISO-8859-1')
-        salt_contraseña = salt_contraseña.encode('ISO-8859-1')
+        salt_password = salt_password.encode('ISO-8859-1')
         kdf = Scrypt(
-            salt=salt_contraseña,
+            salt=salt_password,
             length=32,
             n=2 ** 14,
             r=8,
@@ -33,9 +33,9 @@ class FuncionesCripto:
     # Función para verificar la contraseña de usuario
     def verificar_codigo_acceso(self, codigo_acceso, email):
         cod_acc_bits = bytes(codigo_acceso, 'ISO-8859-1')
-        salt_contraseña = self.get_salt(email, 'contraseña')
+        salt_password = self.get_salt(email, 'password')
         kdf = Scrypt(
-            salt=salt_contraseña,
+            salt=salt_password,
             length=32,
             n=2 ** 14,
             r=8,
@@ -49,7 +49,7 @@ class FuncionesCripto:
     def get_key(email):
         usuario_salt = CrearJsonSalt()
         item = usuario_salt.find_element(email, 'user')
-        key = item['key']
+        key = item['password_hash']
         key = key.encode('ISO-8859-1')
         return key
 
@@ -109,7 +109,7 @@ class FuncionesCripto:
             salt_cifrado = item['salt_cifrado']
             salt_encripted = salt_cifrado.encode('ISO-8859-1')
             return salt_encripted
-        salt_contraseña = item['salt_contraseña']
-        salt_encripted = salt_contraseña.encode('ISO-8859-1')
+        salt_password = item['salt_password']
+        salt_encripted = salt_password.encode('ISO-8859-1')
         return salt_encripted
 
