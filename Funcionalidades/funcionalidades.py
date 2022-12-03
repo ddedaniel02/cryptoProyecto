@@ -40,5 +40,5 @@ class FuncionalidadesGenerales:
             print('Cerrando sesión')
             inicio_aplicacion()
         else:
-            print('ERROR: Opción introducida no válida')
+            print('[ERROR]: Opción introducida no válida')
             self.interfaz_inicio()

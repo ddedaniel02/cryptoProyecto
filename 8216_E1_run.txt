@@ -1,0 +1,66 @@
+
+1.PASO: Ejecutar el fichero main.py del proyecto (en caso de error, cambiar en el archivo config.py la ruta del archivo para poder acceder así a los json).
+
+
+
+
+2.PASO: En el menú presente en la terminal (menú previo a sesión iniciada), escoja la opción deseada. Esta opción debe venir precedida de un '/'.
+
+	- En caso de '/registro', rellene los campos especificados en el formato que se indique. Tras esto, la sesión quedará iniciada.
+		
+		[ACLARACIONES]: En ciertos campos el formato puede no ser completamente claro, por lo que se indica con mayor detalle aquí aquellos que pueden generar mayor duda.
+					
+					# En ningún campo se puede incluir ni el caracter 'ñ' ni letras acentuadas o con cualquier caracter especial (e.j. ü).
+
+					* Nombre y Apellido(s) -> Mín. 1 apellido y no se aceptan caracteres con tilde ni la ñ, pero se aceptan '.', " ' " y '-'
+					* Teléfono -> este debe empezar con '+' y debe dejarse un espacio entre el prefijo y el número como tal
+					* email -> este acepta caracteres de la a-z, A-Z, 0-9 y caracteres como '_', '.', pero tras poner @ no se permiten '-', pero si al menos un '.'
+	
+	- En caso de '/inicio-sesion', rellene los campos especificados en el formato que se indique.
+
+	- En caso de '/salir' la ejecución del programa finaliza.
+
+
+
+
+
+
+
+
+3.PASO: Con la ya sesión iniciada, escoja la opción deseada que se presenta en el menú principal. De nuevo, esta opción es prececida por '/'.
+
+	- En caso de '/funciones-user' se mostrará una serie de comandos posibles relacionados con el usuario y su información personal.
+		
+		[COMANDOS DISPONIBLES]:
+				* '/leave' -> Permite al usuario volver al menú principal.
+
+
+	- En caso de '/funciones-exp' se mostrará una serie de comandos posibles relacionados con los expedientes.
+
+		[COMANDOS DISPONIBLES]:
+				* '/crear-expediente' -> Permite al usuario crear un nuevo expediente. Para ello, rellene los campos que se presentarán a continuación tras ejecutar
+							 este comando siguiendo el formato indicado. Tras esto, retorna al usuario al menú de expedientes.
+				
+					[ACLARACIONES]: En ciertos campos el formato puede no ser completamente claro, por lo que se indica con mayor detalle aquí aquellos que pueden
+							generar mayor duda.
+							
+							# En ningún campo se puede incluir ni el caracter 'ñ' ni letras acentuadas o con cualquier caracter especial (e.j. ü).
+
+							* Nombre de la mascota -> Debe escribirse el nombre de la mascota.
+							* Especie -> Debe escribirse el nombre de la especie.
+							* Raza -> Debe escribirse el nombre de la raza.
+							* Observaciones -> Emplear los caracteres de la a-z, A-Z, 0-9 y caracteres especiales '.', ',', '-' o " ' " únicamente. No se acepta
+									   ningún otro tipo de caracter.
+
+
+				* '/ver-expediente' -> Permite al usuario ver el expediente que este desee.
+
+						# Introducir el ID del expediente que desea ver. Solo se puede ver un expediente que previamente este usuario haya creado, de lo contrario
+						  no permitirá el acceso a dicho ID y retornará al usuario al menú de los expedientes.
+						# Si se introduce '/leave', el usuario volverá al menú de expedientes.						
+
+
+				* '/back' -> Permite al usuario volver al menú principal.
+
+
+	- En caso de '/log-out' se cerrará la sesión, retornando al usuario al menú previo a iniciar la sesión (i.e. el primer menú que se ve tras iniciar el programa por primera vez).
